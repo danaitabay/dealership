@@ -24,8 +24,10 @@ class Motorcycle(Vehicle):
 '''		
 v = Car('Honda', 'Accord', 2014, 5)
 print v	
-'''
 
+a = Car('toyota', 'camry', 2017, 4)
+print a.make
+'''
 print '\nEnter type of vehicle:', 
 vehicle = raw_input('--> ')
 print '\nEnter make of %s?' % vehicle,
@@ -33,14 +35,20 @@ make = raw_input()
 print '\nEnter model of %s?' % make,
 model = raw_input()
 print '\nEnter year of %s?' % model,
-year = raw_input()
-if '%s' % vehicle is 'car':
+year = int(raw_input())
+if vehicle == 'car':
 	print '\nEnter number of doors for %s?' % model,
 	numdoor = int(raw_input())
-elif '%s' % vehicle is 'truck':
-	print '\n%s with bed?' % vehicle,
-elif '%s' % vehicle is 'motorcycle':
-	print '\n%s with side cars?' % vehicle,
+	#a = ['\n%s' % vehicle, '\n%s' % make, '\n%s' % model, '\n%d' % year, '\n%d' % numdoor]
+	acar = Car(make, model, year, numdoor)	
+elif vehicle == 'truck':
+	print '\n%s with bed or without?' % vehicle,
+	bed = raw_input()
+	atruck = Truck(make, model, year, bed)
+elif vehicle == 'motorcycle':
+	print '\n%s with side cars or without?' % vehicle,
+	sidecar = raw_input()
+	amotorcycle = Motorcycle(make, model, year, sidecar)
 print '\nHere are the list of %s %s %s in stock.\n' %(
 year, make, model)
 
