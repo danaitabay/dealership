@@ -63,26 +63,39 @@ def specify_vehicle():
 		
 	return v
 	
+#def filterbyvalue(make, model, year):
+	#print '\nEnter 1 to search using make of vehicle \nEnter 2 for model search'
+	#i = int(raw_input())
+	#if i == 1
+		#print '\n what is the make of vehicle you are searching'
 while True:
 	#vehicles.append(specify_vehicle())
-	print '\nEnter 1 to make an entry \nEnter 2 to remove an entry \nEnter 3 to exit \n',
+	print '\nEnter 1 to make an entry \nEnter 2 to remove an entry \nEnter 3 to search for vehicle \nEnter 4 to exit \n',
 	i = int(raw_input())
 	if i == 1:
 		v = specify_vehicle()
 		if v not in vehicles:
 			vehicles.append(v)
-			print '\nVehicle Added \nWhat do you want to do next?'
+			print '\n%s is Added \nWhat do you want to do next?',
 		else:
 			print '\nError: You can not add the same vehicle twice.'
 		
 	elif i == 2:
 		v = specify_vehicle()
 		vehicles.remove(v)
-		print '\nVehicle Removed \nWhat do you want to do next?'
-	elif i == 3: 
-		print '\nExiting...'
+		print '\n%s is Removed. \nWhat do you want to do next?',
+		
+	elif i == 3:
+		print '\nEnter make of vehicle:',
+		make = raw_input()
+		print '\nEnter model of vehicle:',
+		model = raw_input()
+		print map(str, [x for x in vehicles if x.make == make and x.model == model])
+		print '\nWhat do you want to do next?'
+		
+	elif i == 4: 
+		print '\nExiting...\n',
 		break
-
 		
 #print map(str, vehicles)
 print '\n'.join(str(c) for c in vehicles)
