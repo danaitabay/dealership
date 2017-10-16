@@ -1,3 +1,6 @@
+#import json
+#import b64encode
+
 class Vehicle(object):
 	def __init__(self, make, model, year):
 		self.make = make
@@ -35,7 +38,7 @@ class Motorcycle(Vehicle):
 	def __eq__(self, other):
 		if isinstance(other, self.__class__):
 			return self.__dict__ == other.__dict__
-
+	
 vehicles = []
 
 def specify_vehicle():
@@ -46,11 +49,24 @@ def specify_vehicle():
 	print '\nEnter model of %s?' % make,
 	model = raw_input()
 	print '\nEnter year of %s?' % model,
-	year = int(raw_input())
+	while True:
+		try:
+			year = int(raw_input())
+		except ValueError:
+			print "Please enter an integer value"
+		else:
+			break
+
 	if vehicle == 'car':
 		print '\nEnter number of doors for %s?' % model,
-		numdoor = int(raw_input())
-		#a = ['\n%s' % vehicle, '\n%s' % make, '\n%s' % model, '\n%d' % year, '\n%d' % numdoor]
+		while True:
+			try:
+				numdoor = int(raw_input())
+				#a = ['\n%s' % vehicle, '\n%s' % make, '\n%s' % model, '\n%d' % year, '\n%d' % numdoor]
+			except ValueError:
+				print "Please enter an integer value"
+			else:
+				break
 		v = Car(make, model, year, numdoor)
 	elif vehicle == 'truck':
 		print '\n%s with bed or without?' % vehicle,
@@ -60,30 +76,26 @@ def specify_vehicle():
 		print '\n%s with side cars or without?' % vehicle,
 		sidecar = raw_input()
 		v = Motorcycle(make, model, year, sidecar)
-		
+				
 	return v
 	
-#def filterbyvalue(make, model, year):
-	#print '\nEnter 1 to search using make of vehicle \nEnter 2 for model search'
-	#i = int(raw_input())
-	#if i == 1
-		#print '\n what is the make of vehicle you are searching'
+
 while True:
 	#vehicles.append(specify_vehicle())
-	print '\nEnter 1 to make an entry \nEnter 2 to remove an entry \nEnter 3 to search for vehicle \nEnter 4 to exit \n',
+	print '\nEnter 1 to make an entry \nEnter 2 to remove an entry \nEnter 3 to search for vehicle \nEnter 4 to list of vehicles \nEnter 5 to Exit \n',
 	i = int(raw_input())
 	if i == 1:
 		v = specify_vehicle()
 		if v not in vehicles:
 			vehicles.append(v)
-			print '\n%s is Added \nWhat do you want to do next?',
+			print '\nVehicle is Added \nWhat do you want to do next?',
 		else:
 			print '\nError: You can not add the same vehicle twice.'
 		
 	elif i == 2:
 		v = specify_vehicle()
 		vehicles.remove(v)
-		print '\n%s is Removed. \nWhat do you want to do next?',
+		print '\nVehicle is Removed. \nWhat do you want to do next?',
 		
 	elif i == 3:
 		print '\nEnter make of vehicle:',
@@ -92,19 +104,24 @@ while True:
 		model = raw_input()
 		print map(str, [x for x in vehicles if x.make == make and x.model == model])
 		print '\nWhat do you want to do next?'
+
+	elif i == 4:
+		print '\nHere are the list of vehicles available \n',
+		with open('vehicles.txt', 'r') as f:
+			#vehicles = f.read()
+			print(f.read())
 		
-	elif i == 4: 
+	elif i == 5: 
 		print '\nExiting...\n',
 		break
-		
+
+with open('vehicles.txt', 'w') as f:
+    f.write(str(vehicles))	
 #print map(str, vehicles)
 print '\n'.join(str(c) for c in vehicles)
 
-#print v
-#print '\nHere are the list of %s %s %s in stock.\n' %(
-#year, make, model)
 
 
-
-
-
+#Now read the file back into a Python list object
+#with open('vehicles.txt', 'r') as f:
+    #a = json.loads(f.read())
