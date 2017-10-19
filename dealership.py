@@ -82,7 +82,7 @@ def specify_vehicle():
 
 while True:
 	#vehicles.append(specify_vehicle())
-	print '\nEnter 1 to make an entry \nEnter 2 to remove an entry \nEnter 3 to search for vehicle \nEnter 4 to list of vehicles \nEnter 5 to Exit \n',
+	print '\nEnter 1 to make an entry \nEnter 2 to remove an entry \nEnter 3 to search for vehicle \nEnter 4 to modify Vehicle \nEnter 5 to list of vehicles \nEnter 6 to Exit \n',
 	i = int(raw_input())
 	if i == 1:
 		v = specify_vehicle()
@@ -106,12 +106,28 @@ while True:
 		print '\nWhat do you want to do next?'
 
 	elif i == 4:
+		print '\nEnter the Make of vehicle you want to modify:'
+		make = raw_input()
+		print '\nAnd the model?'
+		model = raw_input()	
+		change = [x for x in vehicles if x.make == make and x.model == model]
+		if change in vehicles:
+			location = vehicles.index(change)
+        	vehicles.remove(change)
+        	correction = raw_input('Enter correction ' )
+        	vehicles.insert(location, correction)
+
+		#else:
+			#print('Entry not found in list')
+			
+	
+	elif i == 5:
 		print '\nHere are the list of vehicles available \n',
 		with open('vehicles.txt', 'r') as f:
 			#vehicles = f.read()
 			print(f.read())
 		
-	elif i == 5: 
+	elif i == 6: 
 		print '\nExiting...\n',
 		break
 
