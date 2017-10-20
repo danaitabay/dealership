@@ -10,7 +10,7 @@ class Vehicle(object):
 class Car(Vehicle):
 	door = (1, 2, 3, 4)
 	def __init__(self, make, model, year, doors):
-		if doors not in self.door:
+		if doors not in self.door: #while true
 			raise ValueError("%s is not a valid door" % doors)	
 		super(Car, self).__init__(make, model, year)
 		self.doors = doors
@@ -98,29 +98,68 @@ while True:
 		print '\nVehicle is Removed. \nWhat do you want to do next?',
 		
 	elif i == 3:
-		print '\nEnter make of vehicle:',
-		make = raw_input()
-		print '\nEnter model of vehicle:',
-		model = raw_input()
+		make = raw_input('Enter make of vehicle:')
+		model = raw_input('Enter model of vehicle:')
 		print map(str, [x for x in vehicles if x.make == make and x.model == model])
 		print '\nWhat do you want to do next?'
 
 	elif i == 4:
-		print '\nEnter the Make of vehicle you want to modify:'
-		make = raw_input()
-		print '\nAnd the model?'
-		model = raw_input()	
+		make = raw_input('Enter the Make of vehicle you want to modify:')
+		model = raw_input('Enter model of vehicle:')
 		change = [x for x in vehicles if x.make == make and x.model == model]
-		if change in vehicles:
-			location = vehicles.index(change)
-        	vehicles.remove(change)
-        	correction = raw_input('Enter correction ' )
-        	vehicles.insert(location, correction)
-
-		#else:
-			#print('Entry not found in list')
-			
 	
+		if not change:
+			print ("Entry not found")
+		else:
+			# Grab matched vehicle
+			v = change[0]
+			
+			# Print current vehicle details
+			print v
+			#edit = int(raw_input('\nEnter 1 to edit Make. \nEnter 2 to edit Model. \nEnter 3 to edit year.'))
+			print '\nEnter 1 to edit Make. \nEnter 2 to edit Model. \nEnter 3 to edit year.'
+			if type(v) == Car:
+				print '\Enter 4 to edit number of doors.'
+				
+			elif v is Truck:
+				print raw_input('\nEnter 4 to edit bed.')
+				
+			elif v is Motorcycle:
+				print raw_input('\nEnter 4 to edit side car.')
+								
+			edit = int(raw_input())
+			if edit == 1:
+				v.make = raw_input('Enter the new value: ')
+			elif edit == 2:
+				v.model = raw_input('Enter the new value: ')
+			elif edit == 3:
+				v.year = int(raw_input('Enter the new value: '))
+			elif edit == 4:
+				if type(v) == Car:
+					v.doors = int(raw_input('\nEnter new value for number of doors:'))
+				elif type(v) == Truck:
+					v.hasBed = raw_input('\nEnter new value for bed:')
+				elif type(v) == Motorcycle:
+					v.hasSideCar = raw_input('\nEnter new value for side car:')
+				
+			
+			# Edit a field
+			#v.make = "Peanutbutter"
+			
+			# Tell user change was made
+			print '\nVehicle Modified\n'
+			
+			# Print updated vehicle
+			print v
+			
+		'''
+			location = vehicles.index(change)
+			vehicles.remove(change)
+			correction = raw_input('Enter correction ' )
+			vehicles.insert(location, correction)
+			
+			print '\nVehicle Modified'
+		'''
 	elif i == 5:
 		print '\nHere are the list of vehicles available \n',
 		with open('vehicles.txt', 'r') as f:
